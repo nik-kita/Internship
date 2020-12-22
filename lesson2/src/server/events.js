@@ -9,17 +9,19 @@ function onError(error, port) {
         throw error;
     }
 
-    const bind = (typeof port === 'string') ? `Pipe ${port}` : `Port ${port}`;
+    const bindOnError = (typeof port === 'string') ? `Pipe ${port}` : `Port ${port}`;
 
     switch (error.code) {
-        case 'EACCES':
-            console.error(`${bind} requires elevated privileges`);
-            process.exit(1);
-        case 'EADDRINUSE':
-            console.error(`${bind} is already in use`);
-            process.exit(1);
-        default:
-            throw error;
+    case 'EACCES':
+        console.error(`${bindOnError} requires elevated privileges`);
+        process.exit(1);
+        break;
+    case 'EADDRINUSE':
+        console.error(`${bindOnError} is already in use`);
+        process.exit(1);
+        break;
+    default:
+        throw error;
     }
 }
 /**
@@ -29,9 +31,9 @@ function onError(error, port) {
  */
 function onListening() {
     const addr = this.address();
-    const bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
+    const bindOnListening = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
 
-    console.log(`Listening on ${bind}`);
+    console.log(`Listening on ${bindOnListening}`);
 }
 
 /**
@@ -47,5 +49,5 @@ function bind(Server, port) {
 module.exports = {
     onError,
     onListening,
-    bind
-}
+    bind,
+};

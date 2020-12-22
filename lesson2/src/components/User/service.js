@@ -9,6 +9,50 @@ module.exports = {
      * @returns Promise<UserModel[]>
      */
     async findAll() {
-        return await UserModel.find({});
-    }
+        return UserModel.find({});
+    },
+
+    /**
+     * @exports
+     * @method create
+     * @param { user.data }
+     * @summary create new user
+     * @returns Promise<UserModel[]>
+     */
+    async create(data) {
+        return new UserModel(data).save();
+    },
+
+    /**
+     * @exports
+     * @method update
+     * @param { user._id, user.data }
+     * @summary find user by {email} and update its data
+     * @returns Promise<UserModel[]>
+     */
+    async update(email, data) {
+        return UserModel.findOneAndUpdate({ email }, data, { new: true });
+    },
+
+    /**
+     * @exports
+     * @method delete
+     * @param { user.email }
+     * @summary find user by {email} and delete it
+     * @returns Promise<UserModel[]>
+     */
+    async delete(email) {
+        return UserModel.deleteOne({ email });
+    },
+
+    /**
+     * @exports
+     * @method find
+     * @param { user.email }
+     * @summary find user by {email} and return it
+     * @returns Promise<UserModel[]>
+     */
+    async find(email) {
+        return UserModel.findOne({ email });
+    },
 };
