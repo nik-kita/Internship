@@ -72,6 +72,7 @@ async function deleteUser(req, res, next) {
         if (result.deletedCount === 0) {
             throw { errmsg: `No users with email '${email}' were found!` };
         }
+        res.status(204).end();
     } catch (error) {
         next(error);
     }
