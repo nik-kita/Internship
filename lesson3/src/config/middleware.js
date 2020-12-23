@@ -3,6 +3,7 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
+const chalkMorgan = require('../trifles/colorLogger');
 
 module.exports = {
     /**
@@ -17,6 +18,8 @@ module.exports = {
                 extended: true,
             }),
         );
+        // moragn for logging http req res (with additional colorizing)
+        app.use(chalkMorgan('tiny'));
         app.use(bodyParser.json());
         // parse Cookie header and populate req.cookies with an object keyed by the cookie names.
         app.use(cookieParser());
@@ -28,6 +31,10 @@ module.exports = {
         // can be used to enable CORS with various options
         app.use(cors());
         // cors
+        // set view engine
+        app.set('view engine', 'ejs');
+        // set folder with views
+        app.set('views', `${__dirname}/../views`);
         app.use((req, res, next) => {
             res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS ');
             res.header('Access-Control-Allow-Credentials', '*');

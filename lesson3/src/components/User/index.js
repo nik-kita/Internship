@@ -12,10 +12,8 @@ const ValidationError = require('../../error/ValidationError');
 async function findAll(req, res, next) {
     try {
         const users = await UserService.findAll();
-
-        res.status(200).json({
-            data: users,
-        });
+        // next(users);
+        res.render('index', { data: users });
     } catch (error) {
         res.status(500).json({
             error: error.message,
